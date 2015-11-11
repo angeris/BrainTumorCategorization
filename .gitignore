@@ -17,3 +17,6 @@ slprj/
 
 # Any and all VIM swap files
 *.swp
+
+# Remove everything from the data/ directory
+data/* 
