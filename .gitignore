@@ -14,3 +14,6 @@
 
 # Simulink Code Generation
 slprj/
+
+# Any and all VIM swap files
+*.swp
