@@ -37,4 +37,3 @@ for i=1:240
         result((i-1)*240+j) = p(i,j);
     end
 end
-
