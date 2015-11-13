@@ -32,3 +32,6 @@ src/includes/RealData3D/*
 *.txt
 
 src/includes/ReadData3D/lastfile.mat
+
+
+*.mat
