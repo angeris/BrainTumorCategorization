@@ -26,3 +26,8 @@ src/includes/RealData3D/*
 
 # Remove stupid OSX files from going into the directory
 .DS_Store
+
+# Remove any type of medical imaging files and their READMEs
+*.mha
+*.txt
+
