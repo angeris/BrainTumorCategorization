@@ -1,1 +1,3 @@
-include(
+% Main File
+addpath(genpath('.'));
+
