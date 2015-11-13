@@ -23,6 +23,6 @@ for i=1:n
     c = ifft(c, [], i);
 end
 
-c = c(extra_dims{:});
+c = real(c(extra_dims{:}));
 
 end

@@ -7,6 +7,19 @@ function [p, dims] = read_data(filepath)
 
 s = 50:200;
 
+
+s_c = 1:5;
+sigma_2 = .01;
+[X, Y, Z] = meshgrid(s_c, s_c, s_c);
+
+K = exp(X.^2 + Y.^2 + Z.^2)./sigma_2;
+K = K./sum(sum(sum(K)));
+
+volCT1 = convnd(volCT1, K, 3);
+volCT2 = convnd(volCT2, K, 3);
+volCT3 = convnd(volCT3, K, 3);
+volCT4 = convnd(volCT4, K, 3);
+
 volCT1 = volCT1(s, s, :);
 volCT2 = volCT2(s, s, :);
 volCT3 = volCT3(s, s, :);
