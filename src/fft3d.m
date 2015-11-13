@@ -1,5 +1,5 @@
 function [ mat_fft ] = fft3d( mat )
-%FFT4D Takes the three-dimensional fourier transform. Useful for
+%FFT3D Takes the three-dimensional fourier transform. Useful for
 %convolution.
 
 t_size = max(size(mat));
