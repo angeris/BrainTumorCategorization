@@ -8,17 +8,20 @@ vols_g = struct([]);
 [vols{3}, ~, ~, ~] = readMHA(strcat(filepath, 'VSD.Brain.XX.O.MR_T1c.54514'));
 [vols{4}, ~, ~, ~] = readMHA(strcat(filepath, 'VSD.Brain.XX.O.MR_T2.54515'));
 
+p_doctor = readMHA('data/brats_2013_pat0001_1/VSD.Brain_3more.XX.O.OT.54517');
+
 s = 50:200;
 
 
-s_c = 1:5;
-sigma_2 = .01;
+s_c = -5:5;
+sigma_2 = 2;
 [X, Y, Z] = meshgrid(s_c, s_c, s_c);
 
 K = exp(X.^2 + Y.^2 + Z.^2)./sigma_2;
 K = K./sum(sum(sum(K)));
 
 for i=1:4
+    vols{i} = vols{i}.*(p_doctor > 0);
     vols_g{i} = convn(vols{i}, K, 'same');
     vols_g{i} = vols_g{i}(s,s,:);
     vols{i} = vols{i}(s,s,:);
