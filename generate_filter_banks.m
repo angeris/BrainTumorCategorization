@@ -1,9 +1,11 @@
 function [ filter_banks ] = generate_filter_banks(param_var, param_var_angle)
-    
+
+% Define Parameters for filter banks
 sigma_x = linspace(0, 5, param_var); sigma_y = linspace(0, 5, param_var); sigma_z = linspace(0, 5, param_var);
 freqx = linspace(0, 5, param_var); freqy = linspace(0, 5, param_var); freqz = linspace(0, 5, param_var);
 sz = linspace(2, 10, param_var);
 
+% Generate Filter Banks 
 filter_banks = {};
 for j = 1:param_var
     freqs = [freqx(j) freqy(j) freqz(j)];
