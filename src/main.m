@@ -8,14 +8,21 @@ addpath(genpath('.'));
 
 %%
 p_doctor = readMHA('data/brats_2013_pat0001_1/VSD.Brain_3more.XX.O.OT.54517');
-[p_hat, dims] = read_data('data/brats_2013_pat0001_1/');
+out_struct = read_data('data/brats_2013_pat0001_1/');
 
 disp('Done with convolution');
 
-s = 50:100;
 
-clas = process_data(p_hat, dims);
+%%
+s = 50:200;
+
+clas = process_data(out_struct{3});
 
 disp('Done with kmeans');
+
+%%
+disp(out_struct{4})
+
+clas = reshape(clas, out_struct{4});
 
 imtool3D([clas, p_doctor(s,s,:)]);

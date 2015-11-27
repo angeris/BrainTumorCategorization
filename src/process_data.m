@@ -1,10 +1,10 @@
-function [ classification ] = process_data( modal_pixels, dims)
+function [ classification ] = process_data(modal_pixels)
 %PROCESS_DATA Inputs the modality of the pixels and outputs each pixel's classification.
 
 K = 7;
 
-[i, ~] = kmeans(modal_pixels, K);
+disp(size(modal_pixels))
 
-classification = reshape(i, dims);
+[classification, ~] = kmeans(modal_pixels, K);
 end
 

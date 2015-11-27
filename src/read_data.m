@@ -1,9 +1,12 @@
-function [p, dims] = read_data(filepath)
+function out_struct = read_data(filepath)
 
-[volCT1, ~, ~, ~] = readMHA(strcat(filepath, 'VSD.Brain.XX.O.MR_Flair.54512'));
-[volCT2, ~, ~, ~] = readMHA(strcat(filepath, 'VSD.Brain.XX.O.MR_T1.54513'));
-[volCT3, ~, ~, ~] = readMHA(strcat(filepath, 'VSD.Brain.XX.O.MR_T1c.54514'));
-[volCT4, ~, ~, ~] = readMHA(strcat(filepath, 'VSD.Brain.XX.O.MR_T2.54515'));
+vols = struct([]);
+vols_g = struct([]);
+
+[vols{1}, ~, ~, ~] = readMHA(strcat(filepath, 'VSD.Brain.XX.O.MR_Flair.54512'));
+[vols{2}, ~, ~, ~] = readMHA(strcat(filepath, 'VSD.Brain.XX.O.MR_T1.54513'));
+[vols{3}, ~, ~, ~] = readMHA(strcat(filepath, 'VSD.Brain.XX.O.MR_T1c.54514'));
+[vols{4}, ~, ~, ~] = readMHA(strcat(filepath, 'VSD.Brain.XX.O.MR_T2.54515'));
 
 s = 50:200;
 
@@ -15,25 +18,38 @@ sigma_2 = .01;
 K = exp(X.^2 + Y.^2 + Z.^2)./sigma_2;
 K = K./sum(sum(sum(K)));
 
-volCT1 = convnd(volCT1, K, 3);
-volCT2 = convnd(volCT2, K, 3);
-volCT3 = convnd(volCT3, K, 3);
-volCT4 = convnd(volCT4, K, 3);
+for i=1:4
+    vols_g{i} = convn(vols{i}, K, 'same');
+    vols_g{i} = vols_g{i}(s,s,:);
+    vols{i} = vols{i}(s,s,:);
+end
 
-volCT1 = volCT1(s, s, :);
-volCT2 = volCT2(s, s, :);
-volCT3 = volCT3(s, s, :);
-volCT4 = volCT4(s, s, :);
+N = numel(vols{1});
 
-dims = size(volCT1);
+vols_p = struct([]);
+vols_g_p = struct([]);
 
-N = numel(volCT1);
+for i=1:4
+    vols_p{i} = reshape(normalize_data(vols{i}), N, 1, 1);
+    vols_g_p{i} = reshape(normalize_data(vols_g{i}), N, 1, 1);
+end
 
-p1 = reshape(normalize_data(volCT1), N, 1, 1);
-p2 = reshape(normalize_data(volCT2), N, 1, 1);
-p3 = reshape(normalize_data(volCT3), N, 1, 1);
-p4 = reshape(normalize_data(volCT4), N, 1, 1);
+out_struct = {};
 
-p = [p1, p2, p3, p4];
+
+out_struct{1} = vols;
+out_struct{2} = vols_g;
+
+p_vals = [];
+
+disp(size(vols_p{1}))
+disp(size(vols_g_p{1}))
+
+for i=1:4
+    p_vals = [vols_p{i}, vols_g_p{i}, p_vals];
+end
+
+out_struct{3} = p_vals;
+out_struct{4} = size(vols{1});
 
 end
