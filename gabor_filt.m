@@ -10,7 +10,6 @@ function gb = gabor_filt(freqs, sigmas, theta, phi, roll, sz)
 % Gabor Filter - gb = gaussian.*sinusoid
 
 %% Generate Parameters for Gabor Filter Function
-if mod(sz,2)==0, sz=sz+1;end
 [x y z]=meshgrid(-sz:sz, sz:-1:-sz, -sz:sz); % generates x, y, z coordinates (1 increment)
 const_gaussian = 1/((2*pi)^(3/2)*sigmas(1)*sigmas(2)*sigmas(3));
 %R = [1,0,0;0,cos(theta), -sin(theta);0, sin(theta), cos(theta)]*[cos(psi), -sin(psi),0;sin(psi), cos(psi), 0;0,0,1];
