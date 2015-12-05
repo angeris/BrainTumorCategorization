@@ -12,6 +12,7 @@ out_struct = read_data('data/brats_2013_pat0001_1/');
 
 disp('Done with convolution');
 
+save('out_struct.mat', 'out_struct', '-v7.3');
 
 %%
 s = 50:200;
