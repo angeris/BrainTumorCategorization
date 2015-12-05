@@ -11,8 +11,14 @@ disp(size(modal_pixels))
 % k-medoids clustering
 %[classification, ~] = kmedoids(modal_pixels, K);
 
-% hierarchical clustering
+% hierarchical clustering 1 - Unweighted average distance
 %classification = cluster(linkage(modal_pixels, 'average', 'euclidean'), 'maxclust', K);
+
+% hierarchical clustering 2 - complete-linkage clustering
+%classification = cluster(linkage(modal_pixels, 'complete', 'euclidean'), 'maxclust', K);
+
+% hierarchical clustering 3 - single-linkage clustering
+%classification = cluster(linkage(modal_pixels, 'single', 'euclidean'), 'maxclust', K);
 
 % gaussian mixture models
 %classification = cluster(fitgmdist(modal_pixels, K), modal_pixels);
