@@ -31,7 +31,7 @@ for i=1:4
 %     vols_g{i} = convn(vols{i}, K, 'same');
     for j=1:FILT_SIZE
         idx = (j-1)*4+i;
-        vols_g{idx} = convn(vols{i}, filter_banks{j}, 'same');
+        vols_g{idx} = real(convn(vols{i}, filter_banks{j}, 'same'));
         vols_g{idx} = vols_g{idx}(s,s,:);
         j
     end
