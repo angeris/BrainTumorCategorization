@@ -20,12 +20,28 @@ sigma_2 = 2;
 K = exp(X.^2 + Y.^2 + Z.^2)./sigma_2;
 K = K./sum(sum(sum(K)));
 
+filter_banks = generate_filter_banks(2, 2);
+FILT_SIZE = length(filter_banks);
+
+disp('Done reading and generating banks');
+
 for i=1:4
+    i
     vols{i} = vols{i}.*(p_doctor > 0);
-    vols_g{i} = convn(vols{i}, K, 'same');
-    vols_g{i} = vols_g{i}(s,s,:);
+%     vols_g{i} = convn(vols{i}, K, 'same');
+    for j=1:FILT_SIZE
+        idx = (j-1)*4+i;
+        vols_g{idx} = convn(vols{i}, filter_banks{j}, 'same');
+        vols_g{idx} = vols_g{idx}(s,s,:);
+        j
+    end
     vols{i} = vols{i}(s,s,:);
 end
+
+save vols;
+save vols_g;
+
+disp('Done with bank convolution');
 
 N = numel(vols{1});
 
@@ -34,8 +50,13 @@ vols_g_p = struct([]);
 
 for i=1:4
     vols_p{i} = reshape(normalize_data(vols{i}), N, 1, 1);
+end
+
+for i=1:(4*FILT_SIZE)
     vols_g_p{i} = reshape(normalize_data(vols_g{i}), N, 1, 1);
 end
+
+disp('Finished reshaping')
 
 out_struct = {};
 
@@ -49,7 +70,11 @@ disp(size(vols_p{1}))
 disp(size(vols_g_p{1}))
 
 for i=1:4
-    p_vals = [vols_p{i}, vols_g_p{i}, p_vals];
+    p_vals = [vols_p{i}, p_vals];
+end
+
+for i=1:(4*FILT_SIZE)
+    p_vals = [vols_g_p{i}, p_vals];
 end
 
 out_struct{3} = p_vals;
