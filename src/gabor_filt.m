@@ -36,5 +36,5 @@ zp = -yp*sin(roll) + zp*cos(roll);
 const_gaussian = 1/((2*pi)^(3/2)*sigmas(1)*sigmas(2)*sigmas(3));
 gaussian = const_gaussian*exp(-0.5*(xp.^2/sigmas(1)^2+yp.^2/sigmas(2)^2+zp.^2/sigmas(3)^2));
 sinusoid = exp(-1i*2*pi*(freqs(1)*x + freqs(2)*y + freqs(3)*z));
-gb = gaussian.*sinusoid;
+gb = real(gaussian.*sinusoid);
 

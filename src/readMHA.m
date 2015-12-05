@@ -13,7 +13,6 @@ function [volCT, x, y, z] = readMHA(pathMHA)
 %% Setting up Reading Files
 celDirectory         = dir([pathMHA filesep '*.mha']);
 [trash, volCT, info] = evalc('ReadData3D([pathMHA filesep celDirectory(1).name]);');
-
 [m,n,s]              = size(volCT);
 
 
