@@ -6,10 +6,10 @@ K = 6;
 disp(size(modal_pixels))
 
 % k-means clustering
-[classification, ~] = kmeans(modal_pixels, K);
+%[classification, ~] = kmeans(modal_pixels, K);
 
 % k-medoids clustering
-% [classification, ~] = kmedoids(modal_pixels, K);
+[classification, ~] = kmedoids(modal_pixels, K);
 
 % hierarchical clustering 1 - Unweighted average distance
 % classification = cluster(linkage(modal_pixels, 'average', 'euclidean'), 'maxclust', K);
